@@ -1,0 +1,33 @@
+{"level":"info","message":"Started logger","timestamp":"2013-04-21T12:53:08.861Z"}
+{"level":"info","message":"Started logger","timestamp":"2013-04-21T12:56:29.539Z"}
+{"level":"info","message":"Started logger","timestamp":"2013-04-21T12:57:40.413Z"}
+{"level":"info","message":"Started logger","timestamp":"2013-04-21T12:58:29.259Z"}
+{"level":"info","message":"Started logger","timestamp":"2013-04-21T12:59:08.692Z"}
+{"data":"{\"datastreams\":[ {\"id\":\"1\", \"current_value\":\"785291\"},{\"id\":\"2\", \"current_value\":\"101\"},{\"id\":\"3\", \"current_value\":\"201\"} ] }","level":"info","message":"Data sent","timestamp":"2013-04-21T12:59:12.034Z"}
+{"data":"{\"datastreams\":[ {\"id\":\"1\", \"current_value\":\"785291\"},{\"id\":\"2\", \"current_value\":\"101\"},{\"id\":\"3\", \"current_value\":\"201\"} ] }","level":"info","message":"Data sent","timestamp":"2013-04-21T12:59:14.390Z"}
+{"data":"{\"datastreams\":[ {\"id\":\"1\", \"current_value\":\"785291\"},{\"id\":\"2\", \"current_value\":\"101\"},{\"id\":\"3\", \"current_value\":\"201\"} ] }","level":"info","message":"Data sent","timestamp":"2013-04-21T12:59:17.950Z"}
+{"data":"{\"datastreams\":[ {\"id\":\"1\", \"current_value\":\"785291\"},{\"id\":\"2\", \"current_value\":\"101\"},{\"id\":\"3\", \"current_value\":\"201\"} ] }","level":"info","message":"Data sent","timestamp":"2013-04-21T12:59:19.556Z"}
+{"data":"{\"datastreams\":[ {\"id\":\"1\", \"current_value\":\"785291\"},{\"id\":\"2\", \"current_value\":\"101\"},{\"id\":\"3\", \"current_value\":\"201\"} ] }","level":"info","message":"Data sent","timestamp":"2013-04-21T12:59:22.298Z"}
+{"level":"info","message":"Started logger","timestamp":"2013-04-21T13:32:09.579Z"}
+{"data":"{\"datastreams\":[ {\"id\":\"1\", \"current_value\":\"785291\"},{\"id\":\"2\", \"current_value\":\"101\"},{\"id\":\"3\", \"current_value\":\"201\"} ] }","feed":"78529","level":"info","message":"Data sent","timestamp":"2013-04-21T13:32:14.058Z"}
+{"data":"{\"datastreams\":[ {\"id\":\"1\", \"current_value\":\"785291\"},{\"id\":\"2\", \"current_value\":\"101\"},{\"id\":\"3\", \"current_value\":\"201\"} ] }","feed":"78529","level":"info","message":"Data sent","timestamp":"2013-04-21T13:32:15.310Z"}
+{"level":"info","message":"Started logger","timestamp":"2013-04-21T13:38:10.299Z"}
+{"level":"info","message":"Started logger","timestamp":"2013-04-21T13:39:14.251Z"}
+{"feed":"78529","data":"{\"datastreams\":[ {\"id\":\"1\", \"current_value\":\"785291\"},{\"id\":\"2\", \"current_value\":\"101\"},{\"id\":\"3\", \"current_value\":\"201\"} ] }","level":"info","message":"Data sent","timestamp":"2013-04-21T13:39:17.459Z"}
+{"feed":"78529","data":"{\"datastreams\":[ {\"id\":\"1\", \"current_value\":\"785291\"},{\"id\":\"2\", \"current_value\":\"101\"},{\"id\":\"3\", \"current_value\":\"201\"} ] }","level":"info","message":"Data sent","timestamp":"2013-04-21T13:39:20.249Z"}
+{"level":"info","message":"Started logger","timestamp":"2013-04-21T13:39:47.027Z"}
+{"level":"info","message":"Started logger","timestamp":"2013-04-21T14:17:35.145Z"}
+{"level":"info","message":"Started logger","timestamp":"2013-04-21T14:30:32.678Z"}
+{"level":"info","message":"Started logger","timestamp":"2013-04-21T14:31:00.732Z"}
+{"level":"info","message":"Started logger","timestamp":"2013-04-21T14:31:50.294Z"}
+{"level":"info","message":"Started logger","timestamp":"2013-04-21T14:32:11.339Z"}
+{"feed":"78529","data":["78529","10","20"],"level":"info","message":"Data sent","timestamp":"2013-04-21T14:32:15.557Z"}
+{"feed":"78529","data":["78529","10","20"],"level":"info","message":"Data sent","timestamp":"2013-04-21T14:32:18.160Z"}
+{"level":"info","message":"Started logger","timestamp":"2013-04-21T14:33:52.971Z"}
+{"feed":"78529","data":["10","20"],"level":"info","message":"Data sent","timestamp":"2013-04-21T14:33:56.143Z"}
+{"level":"info","message":"Started logger","timestamp":"2013-04-21T14:34:38.130Z"}
+{"feed":"78529","data":["10","20"],"level":"info","message":"Data sent","timestamp":"2013-04-21T14:34:41.243Z"}
+{"level":"info","message":"Started logger","timestamp":"2013-04-21T14:35:08.955Z"}
+{"feed":"78529","data":["10","20"],"level":"info","message":"Data sent","timestamp":"2013-04-21T14:35:12.123Z"}
+{"level":"info","message":"Started logger","timestamp":"2013-04-21T14:38:45.932Z"}
+{"level":"info","message":"Started logger","timestamp":"2013-04-21T14:39:03.194Z"}
