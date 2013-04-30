@@ -19,36 +19,48 @@
  * LIBRARIES
  **/
 #include <math.h>
-#include "DHT.h"                // 4. Temp and Humidity Sensor
+#include "DHT.h"                             // 4. Temp and Humidity Sensor
+#include "AirQuality.h"
+#include "Arduino.h" 
 
-#define FEEDID  78529            // COSM settings: feedID
+#define FEEDID  78529                        // COSM settings: feedID
+
+#define LED_PIN 8                            // The number of the LED pin
+
 // SENSORS
 //   1. Light
-float Rsensor;                   // Light sensor: Resistance of sensor in K
+float Rsensor;                               // Light sensor: Resistance of sensor in K
+#define LIGHT_SENSOR_PIN A0
+
 //   2. Sound
+#define SOUND_SENSOR_PIN A1
 
 //   3. Air quality
+#define AIR_SENSOR_PIN A2
+AirQuality airqualitysensor;
+int current_quality =-1;
 
 //   4. Temperature and humidity
-#define DHTPIN A0
+#define DHT_PIN A3
 #define DHTTYPE DHT11
-DHT dht(DHTPIN, DHTTYPE);
+DHT dht(DHT_PIN, DHTTYPE);
+
 //   5. Fine dust (particles)
-int pin = 2;
-unsigned long duration;
-unsigned long starttime;
-unsigned long sampletime_ms = 10000;
-unsigned long lowpulseoccupancy = 0;
-float ratio = 0;
-float concentration = 0;
+#define DUST_PIN A4
+unsigned long dust_duration;
+unsigned long dust_starttime;
+unsigned long dust_sampletime_ms = 10000;
+unsigned long dust_lowpulseoccupancy = 0;
+float dust_ratio = 0;
+float dust_concentration = 0;
 
 
 
-/**********************************************
+/** ***** ***************************************
  ** 
  ** SETUP
  ** 
- **********************************************/
+ ** ***** ***************************************/
 void setup() {
 
   // Start the serial monitor
@@ -56,22 +68,27 @@ void setup() {
   Serial.println("LOG, Birdhouse starting! ");
   
   // Setup the sensors
+
   //   1. Light
   Serial.println("LOG, Setup sensor 1: Light sensor START ");
-  
+  pinMode(LIGHT_SENSOR, INPUT);
   Serial.println("LOG, Setup sensor 1: Light sensor COMPLETE");
+
   //   2. Sound
   Serial.println("LOG, Setup sensor 2: Sound sensor START");
-  
+  pinMode(SOUND_SENSOR, INPUT);
   Serial.println("LOG, Setup sensor 2: Sound sensor COMPLETE");
+
   //   3. Air quality
   Serial.println("LOG, Setup sensor 3: Air quality sensor START");
-  
+  airqualitysensor.init(14);
   Serial.println("LOG, Setup sensor 3: Air quality COMPLETE");
+
   //   4. Temperature and humidity
   Serial.println("LOG, Setup sensor 4: Temp and Humidity sensor START");
   dht.begin();
-  Serial.println("LOG, Setup sensor 4: Temp and Humidity sensor COMPLETE");
+  Serial.println("LOG, Setup sensor 4: Temp and Humidity sensor COMPLETE"); 
+  
   //   5. Fine dust (particles)
   Serial.println("LOG, Setup sensor 5: Dust sensor START");
   pinMode(8,INPUT);
@@ -90,6 +107,21 @@ void setup() {
  ** 
  **********************************************/
 void loop() {
+  
+  // Setup the sensors
+
+  //   1. Light
+  Serial.println("LOG, Reading sensor 1: Light sensor START");
+  int lightValue = analogRead(LIGHT_SENSOR);
+  Serial.println("LOG, Reading sensor 1: Light sensor COMPLETE");
+  
+  //   2. Sound
+  Serial.println("LOG, Reading sensor 2: Sound sensor START");
+  int soundValue = analogRead(SOUND_SENSOR);
+  Serial.println("LOG, Reading sensor 2: Sound sensor COMPLETE");
+  
+  
+  
   // Reading temperature or humidity takes about 250 milliseconds!
   // Sensor readings may also be up to 2 seconds 'old' (its a very slow sensor)
   float h = dht.readHumidity();
@@ -108,6 +140,7 @@ void loop() {
   }
   
   
+  
   // Light
   int sensorValue = analogRead(1); 
   Rsensor=(float)(1023-sensorValue)*10/sensorValue;
@@ -115,7 +148,6 @@ void loop() {
   //Serial.println(sensorValue);
   //Serial.println("the sensor resistance is ");
   //Serial.println(Rsensor,DEC);//show the ligth intensity on the serial monitor;
-  
   
   // Dust sensor   
   duration = pulseIn(pin, LOW);
