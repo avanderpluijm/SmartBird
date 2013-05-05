@@ -24,11 +24,11 @@
  * VARIABLES
  **/
 #define FEEDID  78529                        // COSM settings: feedID
-#define LED_PIN 8                            // The number of the LED Output pin
+int LED_PIN = 8;                            // The number of the LED Output pin
 
 // Reading variables
 unsigned long readingStartTime; 
-int readingInterval = 10000; 
+int readingInterval = 60000; 
 int lightReading = -1;
 int soundReading = -1;
 int tempReading = -1;
@@ -51,7 +51,7 @@ int AIR_SENSOR_PIN = 2;
 int DHT_PIN = 3;
 #define DHTTYPE DHT11
 DHT dht(DHT_PIN, DHTTYPE);
-//   5. Fine dust
+//   5. Fine dust (digital pin)
 int DUST_PIN = 4; 
 unsigned long dust_duration;
 unsigned long dust_starttime;
@@ -68,48 +68,38 @@ float dust_concentration = 0;
 // Reading the light sensor
 void readLight() {
   
-  Serial.println("LOG, Reading sensor 1: Light sensor START");
   // Read the value (voltage)
-  int lightValue = analogRead(LIGHT_SENSOR_PIN);
-  // Convert it to resistance value
-  Rsensor=(float)(1023-lightValue)*10/lightValue;
-  // Convert it to lumen
-  // ??? 
-  // save it fir sending 
-  lightReading = Rsensor; 
-  Serial.print("LOG, Reading sensor 1: Analog data: "); 
-  Serial.println(lightValue); 
-  Serial.print("LOG, Reading sensor 1: Sensor resistance: "); 
-  Serial.println(Rsensor,DEC); 
-  Serial.println("LOG, Reading sensor 1: Light sensor COMPLETE"); 
+  lightReading = analogRead(LIGHT_SENSOR_PIN);
+  
+  Serial.print("LOG, "); 
+  Serial.print(lightReading); 
+  Serial.println(" Light Sensor value"); 
 }
 
 // Reading the sound sensor
 void readSound(){
-  Serial.println("LOG, Reading sensor 2: Sound sensor START");
+
   // Read the value (voltage)
-  int soundValue = analogRead(SOUND_SENSOR_PIN);
+  soundReading = analogRead(SOUND_SENSOR_PIN);
   
-  soundReading = soundValue; 
-  Serial.print("LOG, Reading sensor 2: Analog data: "); 
-  Serial.println(soundValue); 
-  Serial.println("LOG, Reading sensor 2: Sound sensor COMPLETE");
+  Serial.print("LOG, ");  
+  Serial.print(soundReading); 
+  Serial.println(" Sound Sensor value"); 
 }
 
 
 //Reading the Air Quality sensor
 void readAirQuality() {
-  Serial.println("LOG, Reading sensor 3: Air Quality sensor START");
-  int airValue = analogRead(AIR_SENSOR_PIN);
-  Serial.print("LOG, Reading sensor 3: Analog data: "); 
-  Serial.println(airValue); 
-  airQualityReading = airValue; 
-  Serial.println("LOG, Reading sensor 3: Air Quality sensor COMPLETE");
+ 
+  airQualityReading = analogRead(AIR_SENSOR_PIN);
+ 
+  Serial.print("LOG, "); 
+  Serial.print(airQualityReading); 
+  Serial.println(" Air Quality Sensor"); 
 }
   
 // Reading the Temperature and Humidity
 void readDHT(){
-  Serial.println("LOG, Reading sensor 3: Temp and Humidity sensor START");
   // Reading temperature or humidity takes about 250 milliseconds!
   // Sensor readings may also be up to 2 seconds 'old' (its a very slow sensor)
   float h = dht.readHumidity();
@@ -122,20 +112,19 @@ void readDHT(){
     h = -1; 
   } else { }
   
-  Serial.print("LOG, Reading sensor 3: Humidity: "); 
-  Serial.println(h); 
-  Serial.print("LOG, Reading sensor 3: Temperature: "); 
-  Serial.println(t); 
-    
+  Serial.print("LOG, ");  
+  Serial.print(h); 
+  Serial.println(" Humidity Sensor: ");
+  Serial.print("LOG, "); 
+  Serial.print(t); 
+  Serial.println(" Temperature Sensor"); 
+  
   tempReading = t; 
   humidityReading = h;
-  
-  Serial.println("LOG, Reading sensor 3: Temp and Humdity sensor COMPLETE"); 
 }
 
 // Reading the Dust sensor
 void readDust() {
-  Serial.println("LOG, Reading sensor 5: Dust sensor START");
   dust_starttime = millis(); 
   
   while ((millis()-dust_starttime) < dust_sampletime_ms) {
@@ -148,16 +137,11 @@ void readDust() {
   dust_concentration = 1.1*pow(dust_ratio,3)-3.8*pow(dust_ratio,2)+520*dust_ratio+0.62; // using spec sheet curve
   dust_lowpulseoccupancy = 0;
   
-  Serial.print("LOG, Reading sensor 5: Dust: "); 
-  Serial.print(dust_lowpulseoccupancy);
-  Serial.print(", ratio: ");
-  Serial.print(dust_ratio);
-  Serial.print(", concentration");
-  Serial.println(dust_concentration);
+  Serial.print("LOG, "); 
+  Serial.print(dust_concentration);
+  Serial.println(" Dust concentration");
     
   dustReading = dust_concentration;
-  
-  Serial.println("LOG, Reading sensor 5: Dust sensor COMPLETE");    
 }
 
 // Send sensor reading data to Serial. 
@@ -181,6 +165,20 @@ void sendReadingData() {
   
 }
 
+void doBlink() {
+  digitalWrite(LED_PIN, HIGH);
+  delay(300);
+  digitalWrite(LED_PIN, LOW);
+  delay(200);
+   digitalWrite(LED_PIN, HIGH);
+  delay(300);
+  digitalWrite(LED_PIN, LOW);
+  delay(200);
+   digitalWrite(LED_PIN, HIGH);
+  delay(300);
+  digitalWrite(LED_PIN, LOW);
+}
+
 
 /**********************************************************************************************************
  ** 
@@ -193,6 +191,8 @@ void setup() {
   Serial.begin(9600); 
   Serial.println("LOG, Birdhouse starting! ");
   
+  pinMode(LED_PIN, OUTPUT); 
+  
   // Setup the sensors
 
   //   1. Light
@@ -201,7 +201,7 @@ void setup() {
   Serial.println("LOG, Setup sensor 1: Light sensor COMPLETE");
 
   //   2. Sound
-  Serial.println("LOG, Setup sensor 2: Sound sensor START");
+  //Serial.println("LOG, Setup sensor 2: Sound sensor START");
   pinMode(SOUND_SENSOR_PIN, INPUT);
   Serial.println("LOG, Setup sensor 2: Sound sensor COMPLETE");
 
@@ -250,12 +250,13 @@ void loop() {
   // send Reading Data
   sendReadingData(); 
   
+  doBlink(); 
   // wait for some time. How long? (ms)
   int wait = readingInterval - (millis() - readingStartTime); 
   if (wait < 0 ) 
     wait = 0; 
-  Serial.print("LOG, delay: "); 
-  Serial.println(wait); 
+  //Serial.print("LOG, delay: "); 
+  //Serial.println(wait); 
   delay(wait); 
   
 }
