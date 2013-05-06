@@ -74,11 +74,11 @@ function updateFeed(data) {
 	var d='{"datastreams":[ '; 
 	var i=0; 
 
-	var a; 
+	var a = []; 
 	data.forEach(function(entry) {
 		
 		i++; 
-		a.push('{"id":"'+ i +'", "current_value":"' + Math.floor(Math.random()*101) + '"}');
+		a.push('{"id":"'+ i +'", "current_value":"' + entry + '"}');
 	});
 	d += a.join(',') + ']}'; 
 
